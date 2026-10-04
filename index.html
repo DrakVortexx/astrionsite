@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astrion SMP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#050611;
+color:#fff;
+overflow-x:hidden;
+}
+body:before{
+content:"";
+position:fixed;
+inset:0;
+z-index:-2;
+background:
+radial-gradient(circle at 15% 15%,#1769ff22,transparent 30%),
+radial-gradient(circle at 85% 20%,#8b3dff25,transparent 30%),
+radial-gradient(circle at 50% 90%,#00e5ff12,transparent 35%);
+}
+body:after{
+content:"";
+position:fixed;
+inset:0;
+z-index:-1;
+opacity:.2;
+background-image:
+linear-gradient(#ffffff08 1px,transparent 1px),
+linear-gradient(90deg,#ffffff08 1px,transparent 1px);
+background-size:50px 50px;
+pointer-events:none;
+}
+.container{width:min(1120px,92%);margin:auto}
+
+nav{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:72px;
+z-index:50;
+background:#050611cc;
+backdrop-filter:blur(18px);
+border-bottom:1px solid #ffffff10;
+}
+.nav{
+height:100%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+.logo{
+font-size:20px;
+font-weight:900;
+letter-spacing:4px;
+}
+.logo span{
+background:linear-gradient(90deg,#4facfe,#00f2fe,#9b5cff);
+-webkit-background-clip:text;
+color:transparent;
+}
+.navlinks{
+display:flex;
+gap:28px;
+font-size:14px;
+font-weight:bold;
+color:#aeb4d0;
+}
+.navlinks a:hover{color:white}
+
+.hero{
+min-height:850px;
+display:flex;
+align-items:center;
+padding-top:70px;
+}
+.hero-content{
+max-width:850px;
+}
+.status{
+display:inline-flex;
+align-items:center;
+gap:9px;
+padding:9px 15px;
+border-radius:30px;
+background:#00ff9d0d;
+border:1px solid #00ff9d30;
+color:#76ffbd;
+font-size:12px;
+font-weight:bold;
+letter-spacing:1px;
+}
+.status-dot{
+width:7px;
+height:7px;
+border-radius:50%;
+background:#43ff9d;
+box-shadow:0 0 15px #43ff9d;
+}
+h1{
+font-size:clamp(65px,12vw,135px);
+line-height:.82;
+letter-spacing:-8px;
+margin:30px 0;
+font-weight:1000;
+}
+.gradient{
+background:linear-gradient(100deg,#fff,#00f2fe 45%,#8c5cff);
+-webkit-background-clip:text;
+color:transparent;
+}
+.hero p{
+max-width:700px;
+font-size:19px;
+line-height:1.7;
+color:#969bb8;
+}
+.buttons{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-top:35px;
+}
+.btn{
+padding:15px 24px;
+border-radius:12px;
+font-size:14px;
+font-weight:900;
+border:1px solid #ffffff12;
+cursor:pointer;
+transition:.2s;
+}
+.btn:hover{transform:translateY(-3px)}
+.primary{
+color:#031019;
+background:linear-gradient(100deg,#00f2fe,#4facfe);
+box-shadow:0 12px 40px #00e5ff20;
+}
+.secondary{
+background:#101124;
+color:white;
+}
+.ipbox{
+display:inline-flex;
+align-items:center;
+gap:14px;
+margin-top:22px;
+padding:13px 17px;
+border:1px solid #ffffff13;
+border-radius:12px;
+background:#090a17dd;
+cursor:pointer;
+}
+.ip{
+font-family:monospace;
+font-size:15px;
+}
+.copy{
+font-size:11px;
+font-weight:bold;
+color:#00f2fe;
+}
+
+section{padding:100px 0}
+.heading{text-align:center;margin-bottom:50px}
+.kicker{
+font-size:11px;
+font-weight:900;
+letter-spacing:3px;
+color:#00f2fe;
+}
+h2{
+font-size:43px;
+letter-spacing:-2px;
+margin:10px 0;
+}
+.subtitle{
+max-width:650px;
+margin:auto;
+color:#858ba9;
+line-height:1.7;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:17px;
+}
+.card{
+position:relative;
+overflow:hidden;
+padding:27px;
+min-height:190px;
+border:1px solid #7c72ff20;
+border-radius:20px;
+background:linear-gradient(145deg,#11132a,#090a17);
+}
+.card:after{
+content:"";
+position:absolute;
+width:100px;
+height:100px;
+right:-40px;
+top:-40px;
+border-radius:50%;
+background:#4facfe;
+filter:blur(55px);
+opacity:.12;
+}
+.icon{
+font-size:27px;
+margin-bottom:18px;
+}
+.card h3{font-size:19px;margin-bottom:9px}
+.card p{color:#858ba9;line-height:1.6;font-size:14px}
+
+.server-section{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+.panel{
+padding:30px;
+border-radius:22px;
+border:1px solid #7c72ff20;
+background:#0d0e1cdd;
+}
+.panel h3{font-size:20px;margin-bottom:22px}
+.row{
+display:flex;
+justify-content:space-between;
+padding:15px 0;
+border-bottom:1px solid #ffffff0c;
+color:#858ba9;
+}
+.row:last-child{border-bottom:0}
+.value{color:white;font-weight:bold}
+.green{color:#55ffab!important}
+
+.media{
+text-align:center;
+padding:55px 35px;
+border-radius:25px;
+border:1px solid #9b5cff35;
+background:
+radial-gradient(circle at 50% 0%,#9b5cff16,transparent 45%),
+#0d0e1c;
+}
+.media h2{font-size:48px}
+.media p{
+max-width:650px;
+margin:15px auto 30px;
+color:#8d92af;
+line-height:1.7;
+}
+.requirements{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin:30px auto;
+max-width:850px;
+}
+.req{
+padding:20px;
+border-radius:15px;
+background:#ffffff05;
+border:1px solid #ffffff0d;
+}
+.req strong{display:block;margin-bottom:7px}
+.req span{font-size:13px;color:#858ba9}
+
+.cta{text-align:center;padding:120px 0}
+.cta h2{font-size:55px}
+.cta p{color:#858ba9;margin:15px 0 28px}
+
+footer{
+border-top:1px solid #ffffff0c;
+padding:30px 0;
+color:#656b86;
+font-size:13px;
+}
+.footer{
+display:flex;
+justify-content:space-between;
+gap:20px;
+flex-wrap:wrap;
+}
+
+@media(max-width:800px){
+.navlinks{display:none}
+.features,
+.server-section,
+.requirements{grid-template-columns:1fr}
+.hero{min-height:760px}
+h1{letter-spacing:-5px}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="container nav">
+<div class="logo"><span>ASTRION</span> SMP</div>
+<div class="navlinks">
+<a href="#features">Features</a>
+<a href="#server">Server</a>
+<a href="#media">Media</a>
+<a href="#play">Play</a>
+</div>
+</div>
+</nav>
+
+<header class="hero">
+<div class="container">
+<div class="hero-content">
+
+<div class="status">
+<span class="status-dot"></span>
+ASTRION SMP IS ONLINE
+</div>
+
+<h1>
+<span class="gradient">ASTRION</span><br>
+SMP
+</h1>
+
+<p>
+A survival server built for players who want more.
+Build your world, make money, trade through the Auction House,
+fight in PvP, collect Stardust and enter the Warzone.
+</p>
+
+<div class="buttons">
+<a class="btn primary" href="#play">PLAY NOW</a>
+<a class="btn secondary" href="https://discord.gg/gDp66EyFs" target="_blank">JOIN DISCORD</a>
+</div>
+
+<div class="ipbox" onclick="copyIP()">
+<span class="ip">vortexx.my.pebble.host</span>
+<span class="copy" id="copy">COPY IP</span>
+</div>
+
+</div>
+</div>
+</header>
+
+<section id="features">
+<div class="container">
+
+<div class="heading">
+<div class="kicker">THE ASTRION EXPERIENCE</div>
+<h2>Built to keep you playing.</h2>
+<p class="subtitle">
+Survival, economy and PvP combined into one constantly evolving Minecraft experience.
+</p>
+</div>
+
+<div class="features">
+
+<div class="card">
+<div class="icon">⚔</div>
+<h3>PvP</h3>
+<p>Fight other players, protect your loot and prove yourself in Astrion's PvP environment.</p>
+</div>
+
+<div class="card">
+<div class="icon">◆</div>
+<h3>Economy</h3>
+<p>Build your balance through gameplay, trading and smart decisions.</p>
+</div>
+
+<div class="card">
+<div class="icon">◇</div>
+<h3>Auction House</h3>
+<p>Buy and sell items with other players and hunt for the best deals.</p>
+</div>
+
+<div class="card">
+<div class="icon">✦</div>
+<h3>Stardust</h3>
+<p>Earn Stardust and spend it on exclusive rewards through the Star Shop.</p>
+</div>
+
+<div class="card">
+<div class="icon">☠</div>
+<h3>Warzone</h3>
+<p>Enter a dedicated PvP zone and take the fight somewhere completely different.</p>
+</div>
+
+<div class="card">
+<div class="icon">⬡</div>
+<h3>Java + Bedrock</h3>
+<p>Play Astrion with your friends whether you're on Java or Bedrock Edition.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="server">
+<div class="container">
+
+<div class="heading">
+<div class="kicker">SERVER INFO</div>
+<h2>Ready when you are.</h2>
+<p class="subtitle">Connect in seconds and start your Astrion journey.</p>
+</div>
+
+<div class="server-section">
+
+<div class="panel">
+<h3>Connection</h3>
+
+<div class="row">
+<span>Server IP</span>
+<span class="value">vortexx.my.pebble.host</span>
+</div>
+
+<div class="row">
+<span>Java Port</span>
+<span class="value">25592</span>
+</div>
+
+<div class="row">
+<span>Edition</span>
+<span class="value">Java + Bedrock</span>
+</div>
+
+<div class="row">
+<span>Status</span>
+<span class="value green">● ONLINE</span>
+</div>
+
+</div>
+
+<div class="panel">
+<h3>Gameplay</h3>
+
+<div class="row">
+<span>Mode</span>
+<span class="value">Survival SMP</span>
+</div>
+
+<div class="row">
+<span>Economy</span>
+<span class="value">Enabled</span>
+</div>
+
+<div class="row">
+<span>PvP</span>
+<span class="value">Enabled</span>
+</div>
+
+<div class="row">
+<span>Warzone</span>
+<span class="value">Available</span>
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="media">
+<div class="container">
+
+<div class="media">
+
+<div class="kicker">STREAM ASTRION</div>
+<h2>MEDIA RANK</h2>
+
+<p>
+Are you a livestreamer? Bring your community to Astrion,
+stream the server and become part of the Media team.
+</p>
+
+<div class="requirements">
+
+<div class="req">
+<strong>10+ Average Viewers</strong>
+<span>Maintain an average of at least 10 live viewers.</span>
+</div>
+
+<div class="req">
+<strong>IP On Screen</strong>
+<span>Astrion's server IP must be clearly visible on stream.</span>
+</div>
+
+<div class="req">
+<strong>Regular Streams</strong>
+<span>Astrion must be actively featured during your streams.</span>
+</div>
+
+</div>
+
+<p>
+Approved Media members receive the <b>MEDIA</b> rank,
+a higher scoreboard position and more Auction House listings.
+</p>
+
+<a class="btn primary" href="https://discord.gg/gDp66EyFs" target="_blank">
+/discord TO APPLY
+</a>
+
+</div>
+</div>
+</section>
+
+<section id="play" class="cta">
+<div class="container">
+
+<div class="kicker">YOUR NEXT ADVENTURE</div>
+<h2>See you on Astrion.</h2>
+
+<p>Build. Trade. Fight. Dominate.</p>
+
+<div class="buttons" style="justify-content:center">
+<button class="btn primary" onclick="copyIP()">COPY SERVER IP</button>
+<a class="btn secondary" href="https://discord.gg/gDp66EyFs" target="_blank">DISCORD</a>
+</div>
+
+</div>
+</section>
+
+<footer>
+<div class="container footer">
+<span>© 2026 Astrion SMP</span>
+<span>Survival • Economy • PvP • Warzone</span>
+</div>
+</footer>
+
+<script>
+function copyIP(){
+navigator.clipboard.writeText("vortexx.my.pebble.host");
+const el=document.getElementById("copy");
+if(el){
+el.textContent="COPIED!";
+setTimeout(()=>el.textContent="COPY IP",1500);
+}
+}
+</script>
+
+</body>
+</html>
